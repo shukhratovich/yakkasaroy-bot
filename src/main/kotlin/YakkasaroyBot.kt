@@ -8,7 +8,7 @@ class YakkasaroyBot : TelegramLongPollingBot() {
     }
 
     override fun getBotToken(): String {
-        return "8225650901:AAG4eKGbsCamChssnLeZaGA2Gp-pi8mkEm0"
+        return "TOKEN"
     }
 
     override fun onUpdateReceived(update: Update) {
