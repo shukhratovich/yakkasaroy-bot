@@ -4,7 +4,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow
 
-const val ADMIN_ID = 339988173 // ⚠️ ADMIN TELEGRAM ID ni yoz
+const val ADMIN_ID = 123456789 // ⚠️ ADMIN TELEGRAM ID ni yoz
 
 fun TelegramLongPollingBot.sendText(chatId: Long, text: String) {
     val msg = SendMessage(chatId.toString(), text)
