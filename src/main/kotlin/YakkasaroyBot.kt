@@ -1,4 +1,5 @@
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
 
 class YakkasaroyBot : TelegramLongPollingBot() {
@@ -7,9 +8,8 @@ class YakkasaroyBot : TelegramLongPollingBot() {
         return "yakkasaroy_mahallalari_bot"
     }
 
-    override fun getBotToken(): String {
-        return "8225650901:AAG4eKGbsCamChssnLeZaGA2Gp-pi8mkEm0"
-    }
+    override fun getBotToken(): String = System.getenv("BOT_TOKEN")
+
 
     override fun onUpdateReceived(update: Update) {
 
@@ -19,6 +19,11 @@ class YakkasaroyBot : TelegramLongPollingBot() {
 
             val user = UserStorage.users.getOrPut(chatId) { UserData() }
 
+            if (text == "➕ Yana murojaat yuborish") {
+                UserStorage.users[chatId] = UserData(step = UserStep.CHOOSE_MAHALLA)
+                sendStart(chatId)
+                return
+            }
 
             when {
                 text == "/start" -> {
@@ -36,7 +41,13 @@ class YakkasaroyBot : TelegramLongPollingBot() {
                     user.request = text
                     sendToAdmin(user)
                     user.step = UserStep.DONE
-                    sendText(chatId, "✅ Murojaatingiz qabul qilindi. Rahmat!")
+
+                    val msg = SendMessage(
+                        chatId.toString(),
+                        "✅ Murojaatingiz qabul qilindi. Rahmat!\n\nYana murojaat yubormoqchimisiz?"
+                    )
+                    msg.replyMarkup = againKeyboard()
+                    execute(msg)
                 }
             }
         }
